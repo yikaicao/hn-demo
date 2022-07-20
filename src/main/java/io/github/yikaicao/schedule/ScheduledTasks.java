@@ -13,6 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class ScheduledTasks {
 
-    private static final String URL_HACKER_NEWS = "https://hn.algolia.com/api/v1/search_by_date?query=java";
+    private final String URL_HACKER_NEWS = "https://hn.algolia.com/api/v1/search_by_date?query=java";
     private final HttpClient client = HttpClients.createDefault();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final HttpGet httpGet = new HttpGet(URL_HACKER_NEWS);
@@ -39,8 +40,8 @@ public class ScheduledTasks {
     }
 
     //@Scheduled(cron = "0 * * * * ?", zone = "GMT+8") // every minute
-    //@Scheduled(cron = "0 0 * * * ?", zone = "GMT+8") // every hour
-    @Scheduled(fixedRate = 1000) // every second
+    @Scheduled(cron = "0 0 * * * ?", zone = "GMT+8") // every hour
+    //@Scheduled(fixedRate = 1000) // every second
     public void pullHackerNews() {
 
         try {

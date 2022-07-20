@@ -1,6 +1,5 @@
 package io.github.yikaicao.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.util.List;

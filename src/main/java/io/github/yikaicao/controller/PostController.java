@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PostController {
+
+    @Autowired
+    int DEFAULT_PAGE_SIZE;
+
     @Autowired
     private PostRepository postRepository;
 
     @GetMapping("/posts")
     public Page<PostBO> getRecentPostsPageable() {
-        return postRepository.findAll(PageRequest.of(0, 10));
+        return postRepository.findAll(PageRequest.of(0, DEFAULT_PAGE_SIZE));
     }
 
     @DeleteMapping("/post/{id}")

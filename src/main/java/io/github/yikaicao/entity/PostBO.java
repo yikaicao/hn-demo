@@ -2,16 +2,12 @@ package io.github.yikaicao.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.util.StdConverter;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.convert.Jsr310Converters;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

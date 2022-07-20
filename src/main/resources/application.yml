@@ -2,3 +2,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
+      port: 27017
+
+server:
+  port: 8080
