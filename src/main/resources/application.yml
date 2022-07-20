@@ -13,3 +13,11 @@ springdoc.api-docs.path: /api-docs
 # tomcat
 server:
   port: 8080
+
+# executor
+executor:
+  hn:
+    coreSize: 32
+    maxSize: 64
+    keepAliveTime: 3600
+    queueSize: 1000
