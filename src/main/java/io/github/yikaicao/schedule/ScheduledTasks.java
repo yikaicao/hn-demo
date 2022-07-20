@@ -46,8 +46,8 @@ public class ScheduledTasks {
     }
 
     //@Scheduled(cron = "0 * * * * ?", zone = "GMT+8") // every minute
-    //@Scheduled(cron = "0 0 * * * ?", zone = "GMT+8") // every hour
-    @Scheduled(fixedRate = 1000) // every second
+    @Scheduled(cron = "0 0 * * * ?", zone = "GMT+8") // every hour
+    //@Scheduled(fixedRate = 1000) // every second
     public void pullHackerNews() {
         try {
             pullWithFutures();
