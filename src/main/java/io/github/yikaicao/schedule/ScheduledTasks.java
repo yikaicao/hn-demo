@@ -22,15 +22,15 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.time.ZoneOffset;
 import java.util.NoSuchElementException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Component
 @Slf4j
 public class ScheduledTasks {
 
     private static final String URL_HACKER_NEWS = "https://hn.algolia.com/api/v1/search_by_date?query=java";
+    private static final int WAIT_TIME_HACKER_NEWS = 3;
+
     private final HttpClient client = HttpClients.createDefault();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final HttpGet httpGet = new HttpGet(URL_HACKER_NEWS);
@@ -49,49 +49,54 @@ public class ScheduledTasks {
     //@Scheduled(cron = "0 0 * * * ?", zone = "GMT+8") // every hour
     @Scheduled(fixedRate = 1000) // every second
     public void pullHackerNews() {
-
         try {
-            log.info("checking last post status");
-
-            CompletableFuture<Void> completableFuture = CompletableFuture.supplyAsync(() -> {
-                try {
-                    return postRepository.findAll(PageRequest.of(0, 1)).iterator().next();
-                } catch (NoSuchElementException e) {
-                    log.warn("no post yet");
-                    return null;
-                }
-            }, executor).thenAcceptAsync(lastPost -> {
-                String numericFilters = "";
-                if (lastPost != null) {
-                    numericFilters += "&numericFilters=created_at_i>" + lastPost.getCreatedAt().toEpochSecond(ZoneOffset.UTC);
-                }
-
-                try {
-                    HttpResponse res = client.execute(httpGet);
-                    HttpEntity httpEntity = res.getEntity();
-                    if (httpEntity != null) {
-                        log.info("received result");
-                        String result = EntityUtils.toString(httpEntity, "utf-8");
-                        HackerNewsResponseDTO dto = objectMapper.readValue(result, HackerNewsResponseDTO.class);
-                        log.info("received {} posts(hits)", dto.getHits().size());
-                        int savedCount = 0;
-                        for (PostBO p : dto.getHits()) {
-                            try {
-                                postRepository.insert(p);
-                                savedCount++;
-                            } catch (DuplicateKeyException e) {
-                                log.warn("duplicated storyId from HN");
-                            }
-                        }
-                        log.info("saved count = {}", savedCount);
-                    }
-                } catch (IOException e) {
-                    log.error("error when invoking hacker news, {}", e.getMessage());
-                }
-            }, executor);
-            completableFuture.get(3, TimeUnit.SECONDS);
+            pullWithFutures();
         } catch (Exception e) {
             log.error("exception during scheduled hacker news task, {}", e.getMessage());
         }
+    }
+
+    private void pullWithFutures() throws InterruptedException, ExecutionException, TimeoutException {
+        CompletableFuture<Void> completableFuture = CompletableFuture.supplyAsync(() -> {
+            try {
+                return postRepository.findAll(PageRequest.of(0, 1)).iterator().next();
+            } catch (NoSuchElementException e) {
+                log.warn("no post yet");
+                return null;
+            }
+        }, executor).thenAcceptAsync(lastPost -> {
+            String numericFilters = "";
+            if (lastPost != null) {
+                numericFilters += "&numericFilters=created_at_i>" + lastPost.getCreatedAt().toEpochSecond(ZoneOffset.UTC);
+            }
+
+            try {
+                HttpResponse res = client.execute(httpGet);
+                HttpEntity httpEntity = res.getEntity();
+                if (httpEntity != null) {
+                    log.info("received result");
+                    String result = EntityUtils.toString(httpEntity, "utf-8");
+                    HackerNewsResponseDTO dto = objectMapper.readValue(result, HackerNewsResponseDTO.class);
+                    log.info("received {} posts(hits)", dto.getHits().size());
+                    int savedCount = 0;
+                    for (PostBO p : dto.getHits()) {
+                        try {
+                            postRepository.insert(p);
+                            savedCount++;
+                        } catch (DuplicateKeyException e) {
+                            log.warn("duplicated storyId from HN");
+                        }
+                    }
+                    log.info("saved count = {}", savedCount);
+                }
+            } catch (IOException e) {
+                log.error("error when invoking hacker news, {}", e.getMessage());
+            }
+        }, executor);
+        completableFuture.get(WAIT_TIME_HACKER_NEWS, TimeUnit.SECONDS);
+    }
+
+    public ThreadPoolExecutor getExecutor() {
+        return executor;
     }
 }
