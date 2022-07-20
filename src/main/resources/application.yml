@@ -1,8 +1,15 @@
+# mongo
 spring:
   data:
     mongodb:
       auto-index-creation: true
       port: 27017
 
+# swagger-ui custom path
+springdoc.swagger-ui.path: /swagger-ui.html
+# /api-docs endpoint custom path
+springdoc.api-docs.path: /api-docs
+
+# tomcat
 server:
   port: 8080
