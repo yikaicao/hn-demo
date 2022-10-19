@@ -8,7 +8,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout stuff
       - uses: actions/checkout@v3
+        with:
+          repository: yikaicao/yikai-spring-demos
+          token: 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
+          persist-credentials: false
+          path: ./001-spring-framework-demo-xml
+        run: |
+          pwd
+          ls
       - name: install ansible
         run: |
           sudo apt-add-repository ppa:ansible/ansible
