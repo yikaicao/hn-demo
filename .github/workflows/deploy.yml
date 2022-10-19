@@ -8,7 +8,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout stuff
       - uses: actions/checkout@v3
         with:
           repository: yikaicao/yikai-spring-demos
