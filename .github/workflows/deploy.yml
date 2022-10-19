@@ -15,6 +15,7 @@ jobs:
           token: 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
           persist-credentials: false
           path: ./001-spring-framework-demo-xml
+      - name: where am I?
         run: |
           pwd
           ls
