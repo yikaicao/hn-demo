@@ -10,15 +10,16 @@ on:
   workflow_call:
   workflow_dispatch:
 
-deploy:
-    runs-on:  ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: add ansible package archive
-      run: sudo apt-add-repository ppa:ansible/ansible
-    - name: update system package index
-      run: sudo apt update
-    - name: install ansible
-      run: sudo apt-get install -y ansible
-    - name: check ansible version
-      run: ansible-playbook --version
+      - uses: actions/checkout@v3
+      - name: add ansible package archive
+        run: sudo apt-add-repository ppa:ansible/ansible
+      - name: update system package index
+        run: sudo apt update
+      - name: install ansible
+        run: sudo apt-get install -y ansible
+      - name: check ansible version
+        run: ansible-playbook --version
