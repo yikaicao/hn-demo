@@ -14,7 +14,6 @@ jobs:
           sudo apt-add-repository ppa:ansible/ansible
           sudo apt update
           sudo apt-get install -y ansible
-          check ansible version
           ansible-playbook --version
       - name: install eb-cli
         run: |
