@@ -2,6 +2,10 @@ name: ansible-eb-deployment
 
 on:
   workflow_call:
+    inputs:
+      dest-target:
+        required: true
+        type: string
   workflow_dispatch:
 
 jobs:
