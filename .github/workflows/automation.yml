@@ -11,6 +11,6 @@ jobs:
     strategy:
       matrix:
         target: [staging, prod]
-    uses: yikaicao/hn-demo/.github/workflows/deploy.yml
+    uses: yikaicao/hn-demo/.github/workflows/deploy.yml@main
     with:
         destination-target: ${{ matrix.target }}
