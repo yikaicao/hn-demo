@@ -75,7 +75,7 @@ jobs:
           pwd
           ls current_repo/
           ls my_tools/
-      - name: where am I?
+      - name: verify my environment
         run: |
           mvn_home=$(which mvn)
           workspace=${{ env.workspace }}
@@ -87,7 +87,6 @@ jobs:
           ls -l | wc
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
-          mvn package -Dfile=$workspace
 #      - name: install ansible
 #        run: |
 #          sudo apt-add-repository ppa:ansible/ansible
