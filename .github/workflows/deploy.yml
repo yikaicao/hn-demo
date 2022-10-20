@@ -12,7 +12,7 @@ jobs:
     if: ${{ contains(github.ref, 'main') }}
     environment: prod
     runs-on: ubuntu-latest
-    steps:  
+    steps:
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -33,7 +33,6 @@ jobs:
           eb --version
       - name: print dummy token
         if: ${{ contains(github.ref, 'staging') }}
-        env: 
         run: echo ${{ secrets.DuMMy_tOken }}
 
   deploy-staging:
