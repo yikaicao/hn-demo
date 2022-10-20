@@ -52,11 +52,13 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+      - name: checkout this repo
+        uses: actions/checkout@v3
       - name: get workspace
         run: |
           ls pom.xml
           echo "workspace=$(pwd)" >> $GITHUB_ENV
-      - name: checkout
+      - name: checkout dependencies
         uses: actions/checkout@v3
         with:
           repository: yikaicao/yikai-spring-demos
