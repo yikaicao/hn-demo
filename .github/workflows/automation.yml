@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
 
-  matrix deploy:
+  matrix_deploy:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         target: [staging, prod]
