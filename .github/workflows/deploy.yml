@@ -60,6 +60,7 @@ jobs:
           persist-credentials: false
       - name: where am I?
         run: |
+          ls
           ls -l | wc
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
