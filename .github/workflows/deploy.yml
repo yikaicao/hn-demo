@@ -52,6 +52,9 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+      - name: get workspace
+        run: |
+          echo "workspace=$(pwd)" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -61,8 +64,11 @@ jobs:
       - name: where am I?
         run: |
           mvn_home=$(which mvn)
+          workspace=${{ env.workspace }}
           echo ${mvn_home}
           echo $mvn_home
+          echo ${workspace}
+          echo $workspace
           ls
           ls -l | wc
           echo ${{ secrets.dummy_token }}
@@ -73,21 +79,21 @@ jobs:
           ls -l | wc
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
-      - name: install ansible
-        run: |
-          sudo apt-add-repository ppa:ansible/ansible
-          sudo apt update
-          sudo apt-get install -y ansible
-          ansible-playbook --version
-      - name: install eb-cli
-        run: |
-          curl -O https://bootstrap.pypa.io/get-pip.py
-          python3 get-pip.py --user
-          pip install awsebcli --upgrade --user
-          eb --version
-      - name: print dummy token
-        working-directory: yikai-spring-demos/
-        run: |
-          echo ${{ secrets.dummy_token }}
-          echo ${{ inputs.dest-target }}
-          ls -l | wc
+#      - name: install ansible
+#        run: |
+#          sudo apt-add-repository ppa:ansible/ansible
+#          sudo apt update
+#          sudo apt-get install -y ansible
+#          ansible-playbook --version
+#      - name: install eb-cli
+#        run: |
+#          curl -O https://bootstrap.pypa.io/get-pip.py
+#          python3 get-pip.py --user
+#          pip install awsebcli --upgrade --user
+#          eb --version
+#      - name: print dummy token
+#        working-directory: yikai-spring-demos/
+#        run: |
+#          echo ${{ secrets.dummy_token }}
+#          echo ${{ inputs.dest-target }}
+#          ls -l | wc
