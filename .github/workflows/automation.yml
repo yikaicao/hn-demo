@@ -1,0 +1,19 @@
+name: matrix build and deploy
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  build:
+
+  matrix deploy:
+    strategy:
+      matrix:
+        target: [staging, prod]
+    steps:
+      - uses: ./.github/workflows/deploy.yml
+        with:
+          node-version: ${{ matrix.target }}
