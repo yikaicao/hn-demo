@@ -71,6 +71,8 @@ jobs:
           pip install awsebcli --upgrade --user
           eb --version
       - name: print dummy token
+        working-directory: ./yikai-spring-demos
         run: |
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
+          ls -l | wc
