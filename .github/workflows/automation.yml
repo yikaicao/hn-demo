@@ -8,7 +8,6 @@ on:
 
 jobs:
   matrix_deploy:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         target: [staging, prod]
