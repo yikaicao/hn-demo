@@ -60,7 +60,9 @@ jobs:
           persist-credentials: false
       - name: where am I?
         run: |
-          mvn -version
+          mvn_home=$(which mvn)
+          echo ${mvn_home}
+          echo $mvn_home
           ls
           ls -l | wc
           echo ${{ secrets.dummy_token }}
