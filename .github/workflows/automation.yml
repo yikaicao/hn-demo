@@ -7,12 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-
   matrix_deploy:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         target: [staging, prod]
-    uses: ./.github/workflows/deploy.yml
+    uses: yikaicao/hn-demo/.github/workflows/deploy.yml
     with:
-        node-version: ${{ matrix.target }}
+        destination-target: ${{ matrix.target }}
