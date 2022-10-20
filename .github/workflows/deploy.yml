@@ -57,6 +57,7 @@ jobs:
       - name: get workspace
         run: |
           ls pom.xml
+          echo "workspace=$(pwd)"
           echo "workspace=$(pwd)" >> $GITHUB_ENV
       - name: checkout dependencies
         uses: actions/checkout@v3
@@ -73,12 +74,6 @@ jobs:
           echo ${workspace}
           echo $workspace
           ls
-          ls -l | wc
-          echo ${{ secrets.dummy_token }}
-          echo ${{ inputs.dest-target }}
-      - name: where am I??
-        working-directory: ./001-spring-framework-demo-xml/
-        run: |
           ls -l | wc
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
