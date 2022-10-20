@@ -57,6 +57,7 @@ jobs:
         with:
           path: current_repo
       - name: get workspace
+        working-directory: current_repo
         run: |
           ls
           ls pom.xml
