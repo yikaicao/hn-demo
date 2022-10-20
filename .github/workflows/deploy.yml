@@ -1,6 +1,9 @@
 name: ansible-eb-deployment
 
 on:
+  push:
+    branches:
+      - 'main'
   workflow_call:
   workflow_dispatch:
 
@@ -8,7 +11,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
         with:
           repository: yikaicao/yikai-spring-demos
           token: ${{secrets.gh_actions}}
