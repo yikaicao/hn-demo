@@ -3,12 +3,14 @@ name: ansible-eb-deployment
 on:
   push:
     branches:
-      - 'main'
+      - "main"
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  deploy:
+
+  deploy-prod:
+    if: ${{ contains(github.ref, 'ref') }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -17,11 +19,28 @@ jobs:
           repository: yikaicao/yikai-spring-demos
           token: ${{secrets.gh_actions}}
           persist-credentials: false
-          path: ./001-spring-framework-demo-xml
-      - name: where am I?
+      - name: install ansible
         run: |
-          pwd
-          ls
+          sudo apt-add-repository ppa:ansible/ansible
+          sudo apt update
+          sudo apt-get install -y ansible
+          ansible-playbook --version
+      - name: install eb-cli
+        run: |
+          curl -O https://bootstrap.pypa.io/get-pip.py
+          python3 get-pip.py --user
+          pip install awsebcli --upgrade --user
+          eb --version
+
+deploy-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          repository: yikaicao/yikai-spring-demos
+          token: ${{secrets.gh_actions}}
+          persist-credentials: false
       - name: install ansible
         run: |
           sudo apt-add-repository ppa:ansible/ansible
