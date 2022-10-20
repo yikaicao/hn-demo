@@ -54,6 +54,7 @@ jobs:
     steps:
       - name: get workspace
         run: |
+          ls pom.xml
           echo "workspace=$(pwd)" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v3
