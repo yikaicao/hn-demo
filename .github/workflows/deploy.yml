@@ -1,14 +1,24 @@
-name: ansible-eb-deployment
+name: ansible-eb-test-and-deployment
 
 on:
+  push:
+    branches:
+      - "main"
   workflow_call:
     inputs:
       dest-target:
         required: true
         type: string
+        default: staging
   workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        run: echo hello
+
   deploy-prod:
     if: ${{ inputs.dest-target == 'prod' }}
     environment: prod
