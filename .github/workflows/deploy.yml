@@ -37,7 +37,6 @@ jobs:
         run: echo ${{ secrets.DuMMy_tOken }}
 
   deploy-staging:
-    if: ${{ inputs.dest-target == 'staging' }}
     environment: staging
     runs-on: ubuntu-latest
     steps:
@@ -60,4 +59,6 @@ jobs:
           pip install awsebcli --upgrade --user
           eb --version
       - name: print dummy token
-        run: echo ${{ secrets.dummy_token }}
+        run: |
+          echo ${{ secrets.dummy_token }}
+          echo ${{ inputs.dest-target }}
