@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy-prod:
-    if: ${{ contains(github.ref, 'ref') }}
+    if: ${{ contains(github.ref, 'main') }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -32,6 +32,7 @@ jobs:
           eb --version
 
   deploy-staging:
+    if: ${{ contains(github.ref, 'staging') }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
