@@ -10,8 +10,9 @@ on:
 jobs:
   deploy-prod:
     if: ${{ contains(github.ref, 'main') }}
+    environment: prod
     runs-on: ubuntu-latest
-    steps:
+    steps:  
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -30,9 +31,13 @@ jobs:
           python3 get-pip.py --user
           pip install awsebcli --upgrade --user
           eb --version
+      - name: print dummy token
+        if: ${{ contains(github.ref, 'staging') }}
+        env: 
+        run: echo ${{ secrets.DuMMy_tOken }}
 
   deploy-staging:
-    if: ${{ contains(github.ref, 'staging') }}
+    environment: staging
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -53,3 +58,5 @@ jobs:
           python3 get-pip.py --user
           pip install awsebcli --upgrade --user
           eb --version
+      - name: print dummy token
+        run: echo ${{ secrets.dummy_token }}
