@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy-prod:
-    if: ${{ contains(github.ref, 'main') }}
+    if: ${{ inputs.dest-target == 'prod' }}
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +37,7 @@ jobs:
         run: echo ${{ secrets.DuMMy_tOken }}
 
   deploy-staging:
+    if: ${{ inputs.dest-target == 'staging' }}
     environment: staging
     runs-on: ubuntu-latest
     steps:
