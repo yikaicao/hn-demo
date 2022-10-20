@@ -58,6 +58,17 @@ jobs:
           repository: yikaicao/yikai-spring-demos
           token: ${{secrets.gh_actions}}
           persist-credentials: false
+      - name: where am I?
+        run: |
+          ls -l | wc
+          echo ${{ secrets.dummy_token }}
+          echo ${{ inputs.dest-target }}
+      - name: where am I??
+        working-directory: yikai-spring-demos/
+        run: |
+          ls -l | wc
+          echo ${{ secrets.dummy_token }}
+          echo ${{ inputs.dest-target }}
       - name: install ansible
         run: |
           sudo apt-add-repository ppa:ansible/ansible
