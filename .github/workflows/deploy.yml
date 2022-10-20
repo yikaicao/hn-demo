@@ -54,7 +54,8 @@ jobs:
     steps:
       - name: checkout this repo
         uses: actions/checkout@v3
-        with: current_repo
+        with:
+          path: current_repo
       - name: get workspace
         run: |
           ls
