@@ -65,7 +65,7 @@ jobs:
           echo ${{ secrets.dummy_token }}
           echo ${{ inputs.dest-target }}
       - name: where am I??
-        working-directory: yikai-spring-demos/
+        working-directory: ./001-spring-framework-demo-xml/
         run: |
           ls -l | wc
           echo ${{ secrets.dummy_token }}
