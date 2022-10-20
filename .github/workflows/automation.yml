@@ -6,12 +6,23 @@ on:
       - "main"
   workflow_dispatch:
 
+#jobs:
+#  matrix_deploy:
+#    strategy:
+#      matrix:
+#        target: [staging, prod]
+#    steps:
+#      - uses: yikaicao/hn-demo/.github/workflows/deploy.yml@main
+#        with:
+#          destination-target: ${{ matrix.target }}
+
 jobs:
   matrix_deploy:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [staging, prod]
+        param: [staging, prod]
     steps:
       - uses: yikaicao/hn-demo/.github/workflows/deploy.yml@main
         with:
-          destination-target: ${{ matrix.target }}
+          param: ${{ matrix.param }}
