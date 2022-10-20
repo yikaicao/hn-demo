@@ -20,6 +20,7 @@ jobs:
         run: echo hello
 
   deploy-prod:
+    need: [build]
     if: ${{ inputs.dest-target == 'prod' }}
     environment: prod
     runs-on: ubuntu-latest
@@ -47,6 +48,7 @@ jobs:
         run: echo ${{ secrets.DuMMy_tOken }}
 
   deploy-staging:
+    need: [build]
     environment: staging
     runs-on: ubuntu-latest
     steps:
