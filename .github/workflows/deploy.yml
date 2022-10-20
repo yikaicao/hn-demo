@@ -72,6 +72,8 @@ jobs:
           path: my_tools
       - name: where am I??
         run: |
+          pwd
+          ls ../current_repo/
           ls
           ls pom.xml
           ls ../
