@@ -56,6 +56,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: current_repo
+      - name: set up JDK 8
+        uses: actions/setup-java@v3
+        working-directory: current_repo
+        with:
+          java-version: '8'
+          distribution: 'corretto'
+          cache: maven
       - name: get workspace
         working-directory: current_repo
         run: |
